@@ -3,6 +3,22 @@
   "version": 2,
   "projects": {
     "state-training": "apps/state-training",
-    "state-training-e2e": "apps/state-training-e2e"
+    "state-training-e2e": "apps/state-training-e2e",
+    "products": {
+      "projectType": "library",
+      "root": "libs/products",
+      "sourceRoot": "libs/products/src",
+      "prefix": "lib",
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/products"],
+          "options": {
+            "jestConfig": "libs/products/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    }
   }
 }
