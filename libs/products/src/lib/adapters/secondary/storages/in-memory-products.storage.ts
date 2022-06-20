@@ -1,23 +1,23 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, Subject, of } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable, Subject, of, ReplaySubject } from 'rxjs';
 import { SetsStateProductContextPort } from '../../../application/ports/secondary/context/sets-state-product.context-port';
 import { SelectsProductContextPort } from '../../../application/ports/secondary/context/selects-product.context-port';
 import { ProductContext } from '../../../application/ports/secondary/context/product.context';
+import { logFunction } from '../../../utils';
 
 @Injectable()
 export class InMemoryProductsStorage
   implements SetsStateProductContextPort, SelectsProductContextPort
 {
-  private _subject: Subject<Partial<ProductContext>> = new BehaviorSubject<
+  private _subject: Subject<Partial<ProductContext>> = new ReplaySubject<
     Partial<ProductContext>
-  >({});
-
+  >(1);
+  @logFunction
   setState(state: ProductContext): Observable<void> {
-    return of(this._subject.next(state)).pipe(map(() => void 0));
+    return of(this._subject.next(state));
   }
-
-  select(): Observable<Partial<ProductContext>> {
-    return this._subject.asObservable();
+  @logFunction
+  select(): Observable<ProductContext> {
+    return this._subject.asObservable() as Observable<ProductContext>;
   }
 }

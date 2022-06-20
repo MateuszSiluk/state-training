@@ -9,9 +9,9 @@
       "root": "libs/products",
       "sourceRoot": "libs/products/src",
       "prefix": "lib",
-      "architect": {
+      "targets": {
         "test": {
-          "builder": "@nrwl/jest:jest",
+          "executor": "@nrwl/jest:jest",
           "outputs": ["coverage/products"],
           "options": {
             "jestConfig": "libs/products/jest.config.js",

@@ -5,7 +5,9 @@
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:browser",
-      "outputs": ["{options.outputPath}"],
+      "outputs": [
+        "{options.outputPath}"
+      ],
       "options": {
         "outputPath": "dist/apps/state-training",
         "index": "apps/state-training/src/index.html",
@@ -17,7 +19,10 @@
           "apps/state-training/src/favicon.ico",
           "apps/state-training/src/assets"
         ],
-        "styles": ["apps/state-training/src/styles.scss"],
+        "styles": [
+          "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
+          "apps/state-training/src/styles.scss"
+        ],
         "scripts": []
       },
       "configurations": {
@@ -82,7 +87,9 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/apps/state-training"],
+      "outputs": [
+        "coverage/apps/state-training"
+      ],
       "options": {
         "jestConfig": "apps/state-training/jest.config.ts",
         "passWithNoTests": true
