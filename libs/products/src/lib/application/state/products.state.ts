@@ -43,7 +43,6 @@ import { EditProductQuery } from '../ports/primary/query/edit-product.query';
 import { ProductDTO } from '../ports/secondary/dto/product.dto';
 import { SelectProductCommand } from '../ports/primary/command/select-product.command';
 import { ChangeProductPriceCommand } from '../ports/primary/command/change-product-price.command';
-import { logFunction } from '../../utils';
 import { mapFromProductContext } from './product-list-query.mapper';
 
 const makeRandomId = (): number =>
