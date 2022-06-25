@@ -8,8 +8,8 @@ import { ProductContext } from '../../../application/ports/secondary/context/pro
 export class InMemoryProductsStorage
   implements SetsStateProductContextPort, SelectsProductContextPort
 {
-  private _subject: Subject<Partial<ProductContext>> = new ReplaySubject<
-    Partial<ProductContext>
+  private _subject: Subject<ProductContext> = new ReplaySubject<
+    ProductContext
   >(1);
 
   setState(state: ProductContext): Observable<void> {
