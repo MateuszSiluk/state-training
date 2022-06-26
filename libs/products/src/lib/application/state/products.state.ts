@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, pipe } from 'rxjs';
 import { filter, map, switchMap, take } from 'rxjs/operators';
 import { LoadProductsCommandPort } from '../ports/primary/command/load-products.command-port';
 import { GetsCurrentProductListQueryPort } from '../ports/primary/query/gets-current-product-list.query-port';
@@ -49,4 +49,20 @@ const makeRandomId = (): number =>
   parseInt(`${new Date().getTime()}${Math.ceil(Math.random() * 1000)}`);
 
 @Injectable()
-export class ProductsState {}
+export class ProductsState implements LoadProductsCommandPort {
+  constructor(
+    @Inject(GETS_ALL_PRODUCT_DTO)
+    private _getsAllProductDto: GetsAllProductDtoPort,
+    @Inject(SETS_STATE_PRODUCT_CONTEXT)
+    private _setsStateProductContext: SetsStateProductContextPort
+  ) {}
+  loadProducts(command: LoadProductsCommand): Observable<void> {
+    return this._getsAllProductDto
+      .getAll()
+      .pipe(
+        switchMap((products) =>
+          this._setsStateProductContext.setState({ all: products })
+        )
+      );
+  }
+}
