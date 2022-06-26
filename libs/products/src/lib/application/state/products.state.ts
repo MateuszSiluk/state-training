@@ -49,13 +49,18 @@ const makeRandomId = (): number =>
   parseInt(`${new Date().getTime()}${Math.ceil(Math.random() * 1000)}`);
 
 @Injectable()
-export class ProductsState implements LoadProductsCommandPort {
+export class ProductsState
+  implements LoadProductsCommandPort, GetsCurrentProductListQueryPort
+{
   constructor(
     @Inject(GETS_ALL_PRODUCT_DTO)
     private _getsAllProductDto: GetsAllProductDtoPort,
     @Inject(SETS_STATE_PRODUCT_CONTEXT)
-    private _setsStateProductContext: SetsStateProductContextPort
+    private _setsStateProductContext: SetsStateProductContextPort,
+    @Inject(SELECTS_PRODUCT_CONTEXT)
+    private _selectsProductContext: SelectsProductContextPort
   ) {}
+
   loadProducts(command: LoadProductsCommand): Observable<void> {
     return this._getsAllProductDto
       .getAll()
@@ -64,5 +69,10 @@ export class ProductsState implements LoadProductsCommandPort {
           this._setsStateProductContext.setState({ all: products })
         )
       );
+  }
+  getCurrentProductListQuery(): Observable<ProductListQuery> {
+    return this._selectsProductContext
+      .select()
+      .pipe(map((ctx) => mapFromProductContext(ctx)));
   }
 }
